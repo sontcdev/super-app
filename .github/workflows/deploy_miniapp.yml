@@ -28,9 +28,8 @@ jobs:
           access-key-id: ${{ secrets.ALI_ACCESS_KEY_ID }}
           access-key-secret: ${{ secrets.ALI_ACCESS_KEY_SECRET }}
 
-      # 5. Upload folder build/web lên OSS Bucket
+      # 5. Upload folder build/web lên OSS Bucket với đúng Content-Type
       - name: Upload to OSS
         run: |
-          # cp -r: copy đệ quy folder
-          # -u: update (chỉ file mới) hoặc -f: force (ghi đè tất cả)
-          ossutil cp -r build/web oss://superapp-miniapps/buy-sim/ -u
+          # Upload tất cả file, ossutil sẽ tự detect MIME type dựa vào extension
+          ossutil cp -r build/web/ oss://superapp-miniapps/buy-sim/ -f --acl public-read
