@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +30,11 @@
       color: white;
       font-size: 2.5rem;
       margin-bottom: 10px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     .subtitle {
-      color: rgba(255,255,255,0.8);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 1.1rem;
       margin-bottom: 40px;
     }
@@ -52,13 +53,13 @@
       padding: 30px 20px;
       text-decoration: none;
       color: #333;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .app-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
     }
 
     .app-icon {
@@ -77,25 +78,40 @@
       color: #666;
     }
 
-    .buy-sim { background: linear-gradient(135deg, #f5af19 0%, #f12711 100%); }
-    .buy-sim .app-icon, .buy-sim .app-name, .buy-sim .app-desc { color: white; }
+    .buy-sim {
+      background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+    }
 
-    .payment { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-    .payment .app-icon, .payment .app-name, .payment .app-desc { color: white; }
+    .buy-sim .app-icon,
+    .buy-sim .app-name,
+    .buy-sim .app-desc {
+      color: white;
+    }
+
+    .payment {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+
+    .payment .app-icon,
+    .payment .app-name,
+    .payment .app-desc {
+      color: white;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>🚀 Super App</h1>
     <p class="subtitle">Chọn dịch vụ bạn muốn sử dụng</p>
-    
+
     <div class="apps-grid">
       <a href="./buy-sim/" class="app-card buy-sim">
         <div class="app-icon">📱</div>
         <div class="app-name">Kho SIM</div>
         <div class="app-desc">Mua SIM số đẹp</div>
       </a>
-      
+
       <a href="./payment/" class="app-card payment">
         <div class="app-icon">💳</div>
         <div class="app-name">Thanh toán</div>
@@ -104,4 +120,6 @@
     </div>
   </div>
 </body>
+
 </html>
+<!-- Trigger OSS deployment -->
