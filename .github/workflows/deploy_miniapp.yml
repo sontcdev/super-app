@@ -33,4 +33,4 @@ jobs:
         run: |
           # cp -r: copy đệ quy folder
           # -u: update (chỉ file mới) hoặc -f: force (ghi đè tất cả)
-          ossutil cp -r build/web oss://ten-bucket-cua-ban/folder-mua-sim/ --force
+          ossutil cp -r build/web oss://superapp-miniapps/ -u
