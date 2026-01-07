@@ -24,7 +24,7 @@ jobs:
       # 4. Cài đặt công cụ ossutil (CLI của Alibaba Cloud)
       - uses: manyuanrong/setup-ossutil@v2.0
         with:
-          endpoint: "oss-ap-southeast-1.aliyuncs.com" # Thay đúng Region của bạn
+          endpoint: "oss-cn-hangzhou.aliyuncs.com" # Region Hangzhou, China
           access-key-id: ${{ secrets.ALI_ACCESS_KEY_ID }}
           access-key-secret: ${{ secrets.ALI_ACCESS_KEY_SECRET }}
 
