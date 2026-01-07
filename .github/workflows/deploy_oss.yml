@@ -53,7 +53,7 @@ jobs:
       - name: Deploy shell to OSS
         if: steps.check.outputs.deploy == 'true'
         run: |
-          ossutil cp -r shell/ oss://${{ env.OSS_BUCKET }}/ -f
+          ossutil cp -r shell/ oss://${{ env.OSS_BUCKET }}/ -f --acl public-read
 
   detect-and-deploy-miniapps:
     runs-on: ubuntu-latest
@@ -106,4 +106,4 @@ jobs:
       - name: Deploy ${{ matrix.app }} to OSS
         if: steps.check.outputs.deploy == 'true'
         run: |
-          ossutil cp -r mini-apps/${{ matrix.app }}/build/web/ oss://${{ env.OSS_BUCKET }}/${{ matrix.app }}/ -f
+          ossutil cp -r mini-apps/${{ matrix.app }}/build/web/ oss://${{ env.OSS_BUCKET }}/${{ matrix.app }}/ -f --acl public-read
