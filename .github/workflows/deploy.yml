@@ -1,0 +1,69 @@
+name: Deploy Mini Apps
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'mini-apps/**'
+  workflow_dispatch:
+    inputs:
+      app_name:
+        description: 'Mini app to deploy (e.g., buy-sim, payment)'
+        required: true
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      changed_apps: ${{ steps.detect.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed mini apps
+        id: detect
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "apps=[\"${{ github.event.inputs.app_name }}\"]" >> $GITHUB_OUTPUT
+          else
+            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep "^mini-apps/" | cut -d'/' -f2 | sort -u | jq -R -s -c 'split("\n")[:-1]')
+            if [ "$CHANGED" == "[]" ] || [ -z "$CHANGED" ]; then
+              echo "apps=[]" >> $GITHUB_OUTPUT
+            else
+              echo "apps=$CHANGED" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Show detected apps
+        run: echo "Changed apps - ${{ steps.detect.outputs.apps }}"
+
+  deploy:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.changed_apps != '[]' && needs.detect-changes.outputs.changed_apps != ''
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: ${{ fromJson(needs.detect-changes.outputs.changed_apps) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Get dependencies for ${{ matrix.app }}
+        working-directory: mini-apps/${{ matrix.app }}
+        run: flutter pub get
+
+      - name: Build ${{ matrix.app }}
+        working-directory: mini-apps/${{ matrix.app }}
+        run: flutter build web --release --base-href "/super-app/${{ matrix.app }}/"
+
+      - name: Deploy ${{ matrix.app }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: mini-apps/${{ matrix.app }}/build/web
+          destination_dir: ${{ matrix.app }}
+          keep_files: true
